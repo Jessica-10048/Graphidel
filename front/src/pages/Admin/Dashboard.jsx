@@ -1,9 +1,67 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router';
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+     <div className="container my-5">
+      <h1 className="text-center mb-4">👩‍💻 Administrator Dashboard</h1>
 
-export default Dashboard
+      <div className="row row-cols-1 row-cols-md-2 g-4">
+        <div className="col">
+          <div className="card h-100 shadow-sm border-primary">
+            <div className="card-body text-center">
+              <h5 className="card-title">➕ Add a product</h5>
+              <p className="card-text">Add a new product to your store.</p>
+              <Link to="/admin/product/add" className="btn btn-outline-primary">
+                Add Product
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col">
+          <div className="card h-100 shadow-sm border-success">
+            <div className="card-body text-center">
+              <h5 className="card-title">📦 Manage products</h5>
+              <p className="card-text">Edit or delete existing products.</p>
+              <Link to="/admin/products" className="btn btn-outline-success">
+                Manage Products
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col">
+          <div className="card h-100 shadow-sm border-warning">
+            <div className="card-body text-center">
+              <h5 className="card-title">🧾 See orders</h5>
+              <p className="card-text">View customer orders and details.</p>
+              <Link to="/admin/orders" className="btn btn-outline-warning">
+                View Orders
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col">
+          <div className="card h-100 shadow-sm border-info">
+            <div className="card-body text-center">
+              <h5 className="card-title">📩 Manage Newsletter</h5>
+              <p className="card-text">Handle newsletter subscriptions.</p>
+              <Link to="/admin/newsletter" className="btn btn-outline-info">
+                Newsletter
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p className="text-center mt-4 text-muted">
+        Welcome to the administration area. Choose an action above.
+      </p>
+    </div>
+  );
+};
+
+
+export default Dashboard;
