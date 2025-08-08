@@ -1,86 +1,159 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import URL from'../../../utils/constants/url';
+import URL from '../../../utils/constants/url'; // Tu gardes le nom 'URL'
+
 const AddProduct = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [discount, setDiscount] = useState('');
+  const [promo, setPromo] = useState('');
+  const [images, setImages] = useState([]);
+  const [previews, setPreviews] = useState([]);
   const [message, setMessage] = useState('');
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
-    setPreview();
+  // Calcul automatique du prix promo
+  const calculatePromo = (priceValue, discountValue) => {
+    if (!priceValue || !discountValue) return '';
+    const promoPrice = priceValue - (priceValue * discountValue / 100);
+    return promoPrice.toFixed(2);
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!name || !price || !image) {
-    setMessage('Please fill in all the required fields.');
-    return;
-  }
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files);
 
-  const formData = new FormData();
-  formData.append('name', name.toString());
-  formData.append('description', description.toString());
-  formData.append('price', price.toString());
-  formData.append('image', image);
+    const filePreviews = files.map((file) => window.URL.createObjectURL(file));
+    setPreviews(filePreviews);
+  };
 
-  try {
-    const res = await axios.post(URL.POST_PRODUCT, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+    setPrice(value);
+    setPromo(calculatePromo(value, discount));
+  };
+
+  const handleDiscountChange = (e) => {
+    const value = e.target.value;
+    setDiscount(value);
+    setPromo(calculatePromo(price, value));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !price || images.length === 0) {
+      setMessage('Please fill in all the required fields.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('price', price);
+    formData.append('promo', promo);
+    formData.append('discount',discount);
+
+    images.forEach((image) => {
+      formData.append('images', image);
     });
-    setMessage(res.data.message);
-    setName('');
-    setDescription('');
-    setPrice('');
-    setImage(null);
-    setPreview(null);
-  } catch (error) {
-    console.error(error);
-    setMessage('Error when adding.');
-  }
-};
 
+    try {
+      const res = await axios.post(URL.POST_PRODUCT, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setMessage(res.data.message || 'Product added successfully!');
+      setName('');
+      setDescription('');
+      setPrice('');
+      setPromo('');
+      setDiscount('');
+      setImages([]);
+      setPreviews([]);
+    } catch (error) {
+      console.error(error);
+      setMessage('Error when adding the product.');
+    }
+  };
 
   return (
-    <section className="form-card-add d-flex ">
-      <h2 className='form-card'>Add a product</h2>
+    <section className="form-card-add d-flex">
+      <h2 className="form-card">Add a product</h2>
+
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
-        className='form-group'
+          className="form-group"
           type="text"
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
+
         <textarea
-        className='form-group'
-          placeholder="description"
+          className="form-group"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+
         <input
-        className='form-group'
+          className="form-group"
           type="number"
-          placeholder="Price ($)"
+          placeholder="Price (£)"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={handlePriceChange}
           required
         />
-        <input className='form-group' type="file" accept="image/*" onChange={handleImageChange} required />
 
-        {preview && <img src={preview} alt="Overview" width="200" style={{ marginTop: '10px' }} />}
+        <input
+          className="form-group"
+          type="number"
+          placeholder="Discount (%)"
+          value={discount}
+          onChange={handleDiscountChange}
+        />
 
-        <button type="submit" className="cta-button">Add a product</button>
+        <input
+          className="form-group"
+          type="number"
+          placeholder="Promo Price (£)"
+          value={promo}
+          readOnly
+        />
+
+        <input
+          className="form-group"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageChange}
+          required
+        />
+
+        {previews.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: '10px' }}>
+            {previews.map((src, index) => (
+              <img
+                key={index}
+                src={src}
+                alt={`Preview ${index}`}
+                width="200"
+                style={{ marginRight: '10px', marginBottom: '10px' }}
+              />
+            ))}
+          </div>
+        )}
+
+        <button type="submit" className="cta-button">
+          Add a product
+        </button>
       </form>
 
-      {message && <p>{message}</p>}
+      {message && <p style={{ marginTop: '15px' }}>{message}</p>}
     </section>
   );
 };

@@ -13,6 +13,7 @@ const Checkout = () => {
   const [address, setAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [email, setEmail] = useState("");
+  const[password,setPassword]= useState("")
 
   const deliveryFee = 5.0;
   const subtotal = cartItems.reduce(
@@ -35,7 +36,8 @@ const Checkout = () => {
           phoneNumber,
           address,
           postalCode,
-          email
+          email,
+          password
         },
       }),
     });
@@ -51,79 +53,65 @@ const Checkout = () => {
 
   };
 
-  return (
+ return (
     <div className="container my-5">
-      <h2 className="mb-4 text-center">🧾 Checkout</h2>
+      <h2 className="mb-4">🧾 Complete Your Order</h2>
       <div className="row">
-        {/* Address Form */}
+        {/* Registration + Shipping Form */}
         <div className="col-md-6">
           <form onSubmit={(e) => { e.preventDefault(); handlePayment(); }}>
-            <div className="mb-3">
-              <label className="form-label">First Name</label>
+            <input
+              className="form-control mb-2"
+              placeholder="First Name"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              className="form-control mb-2"
+              placeholder="Last Name"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
               <input
-                type="text"
-                className="form-control"
-                placeholder="John"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                className="form-control mb-2"
+                placeholder="Shipping Address"
                 required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Last Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Doe"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Phone Number</label>
-              <input
-                type="tel"
-                className="form-control"
-                placeholder="(555) 123-4567"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Address</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="123 Main Street"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                required
               />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Postal Code</label>
               <input
-                type="text"
-                className="form-control"
-                placeholder="10001"
+                className="form-control mb-3"
+                placeholder="Postal Code"
+                required
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
-                required
               />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
               <input
-                type="email"
-                className="form-control"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                className="form-control mb-2"
+                placeholder="Phone Number"
                 required
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
-            </div>
+            <input
+              type="email"
+              className="form-control mb-2"
+              placeholder="Email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              className="form-control mb-2"
+              placeholder="Password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
             <button type="submit" className="btn btn-primary w-100">
               💳 Pay with Stripe
             </button>
@@ -144,22 +132,22 @@ const Checkout = () => {
                 >
                   <div>
                     <strong>{item.name}</strong><br />
-                    <small>{item.quantity} × ${item.price.toFixed(2)}</small>
+                    <small>{item.quantity} × £{item.price.toFixed(2)}</small>
                   </div>
-                  <span>${(item.quantity * item.price).toFixed(2)}</span>
+                  <span>£{(item.quantity * item.price).toFixed(2)}</span>
                 </li>
               ))}
               <li className="list-group-item d-flex justify-content-between">
                 <strong>Subtotal</strong>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>£{subtotal.toFixed(2)}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
                 <strong>Delivery Fee</strong>
-                <span>${deliveryFee.toFixed(2)}</span>
+                <span>£{deliveryFee.toFixed(2)}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
                 <strong>Total</strong>
-                <span>${total.toFixed(2)}</span>
+                <span>£{total.toFixed(2)}</span>
               </li>
             </ul>
           </div>

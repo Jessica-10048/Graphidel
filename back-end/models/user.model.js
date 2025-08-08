@@ -9,14 +9,12 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ["user", "admin"], default: "user" },
 }, { timestamps: true });
 
-// Hachage du mot de passe avant enregistrement
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// Vérification du mot de passe
 userSchema.methods.comparePassword = function (password) {
   return bcrypt.compare(password, this.password);
 };

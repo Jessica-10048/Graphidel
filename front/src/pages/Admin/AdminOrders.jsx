@@ -57,7 +57,7 @@ const AdminOrders = () => {
                 <th>Email</th>
                 <th>Name</th>
                 <th>Address</th>
-                <th>Total ($)</th>
+                <th>Total (£)</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Products</th>
@@ -80,7 +80,7 @@ const AdminOrders = () => {
                     <small className="text-muted">{order.customer?.postalCode}</small>
                   </td>
 
-                  <td className="text-end">${order.totalAmount?.toFixed(2) || '0.00'}</td>
+                  <td className="text-end">£{order.totalAmount?.toFixed(2) || '0.00'}</td>
 
                   <td className="text-center">
                     <span className={`badge rounded-pill px-3 py-2 ${order.status === 'Processed' ? 'bg-success' : 'bg-warning text-dark'}`}>

@@ -2,6 +2,10 @@ const URL = {
   // USER
   POST_USER_REGISTER: "http://localhost:8000/api/user/register",
   AUTH_LOGIN: "http://localhost:8000/api/user/sign",
+  GET_USER: "http://localhost:8000/api/user/get",
+  GET_ALL_USER: "http://localhost:8000/api/user/all",
+  UPDATE_USER: "http://localhost:8000/api/user/update",
+  DELETE_USER: "http://localhost:8000/api/user/delete",
 
   // PRODUCT
   POST_PRODUCT: "http://localhost:8000/api/product/add",
@@ -20,13 +24,28 @@ const URL = {
   // NEWSLETTER
   POST_NEWSLETTER: "http://localhost:8000/api/newsletter/add",
   CREATE_NEWSLETTER: "http://localhost:8000/api/newsletter/create",
-  GET_ALL_NEWSLETTER:"http://localhost:8000/api/newsletter/all",
+  GET_ALL_NEWSLETTER: "http://localhost:8000/api/newsletter/all",
   GET_NEWSLETTER: "http://localhost:8000/api/newsletter/get",
   UPDATE_NEWSLETTER: "http://localhost:8000/api/newsletter/update",
   DELETE_NEWSLETTER: "http://localhost:8000/api/newsletter/delete",
 
   // Subscribers
-   GET_ALL_SUBSCRIBERS: "http://localhost:8000/api/newsletter/subscribers",
+  GET_ALL_SUBSCRIBERS: "http://localhost:8000/api/newsletter/subscribers",
 
+  // ===== TEMPLATES =====
+  POST_TEMPLATE: "http://localhost:8000/api/templates/add", 
+  UPDATE_TEMPLATE: "http://localhost:8000/api/templates/update", 
+  DELETE_TEMPLATE: "http://localhost:8000/api/templates/delete", 
+  GET_ALL_TEMPLATES: "http://localhost:8000/api/templates/all",
+  GET_TEMPLATE: "http://localhost:8000/api/templates/get/:id",
+  
+  // Assets protégés (admin)
+  ADD_TEMPLATE_ASSET: "http://localhost:8000/api/templates", 
+  REMOVE_TEMPLATE_ASSET: "http://localhost:8000/api/templates", 
+
+  // Téléchargements sécurisés (client connecté)
+  MY_DOWNLOADS_LIST: "http://localhost:8000/api/templates/me/downloads/list",
+  DOWNLOAD_ASSET: "http://localhost:8000/api/templates/me/downloads", 
 };
+
 export default URL;

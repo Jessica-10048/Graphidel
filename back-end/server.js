@@ -1,5 +1,5 @@
 const app = require('./app');
-const ENV = require('./');
+const ENV = require('./server');
 
 // PORT 
 const PORT = ENV.PORT || 8080

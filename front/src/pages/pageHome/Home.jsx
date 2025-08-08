@@ -1,94 +1,105 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import URL from "../../utils/constants/url";
+import { Link } from "react-router";
 import templates from "../../assets/img/16_templates.jpg";
 import palmiers from "../../assets/img/Collage_palmiers.jpg";
 import coqRecyclage from "../../assets/img/Collage_coq_recyclage.jpg";
 import papillons from "../../assets/img/Collage_papillons.jpg";
 import poisson from "../../assets/img/Collage_poisson.jpg";
-import DSC08657 from "../../assets/img/5cm/DSC08657.jpg";
-import DSC08653 from "../../assets/img/2.5cm/DSC08653.jpg";
-import { Link } from "react-router";
+
 const Home = () => {
+  
+  const [promoProduct, setPromoProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchPromo = async () => {
+      
+      
+      try {
+        const res = await axios.get(URL.GET_ALL_PRODUCT);
+        console.log(res);
+        
+        const promos = res.data.filter(
+          (product) => product.promo && product.promo < product.price
+        );
+        if (promos.length > 0) {
+          setPromoProduct(promos[0]);
+        }
+      } catch (error) {
+        console.error("Erreur chargement promo", error);
+      }
+    };
+
+    fetchPromo();
+  }, []);
+
   return (
     <>
-      {/* <!-- HERO SECTION --> */}
+      {/* HERO */}
       <section className="hero">
         <div className="hero-content">
           <h1>Create perfect paper crafts.</h1>
-          <p>
-            Creative punches + free design templates. Simple, beautiful,
-            inspiring.
-          </p>
-          <a href="#" className="cta-button">
-            Explore the Bundle
-          </a>
+          <p>Creative punches + free design templates. Simple, beautiful, inspiring.</p>
+          <a href="#" className="cta-button">Explore the Bundle</a>
         </div>
       </section>
-      {/* <!-- TEMPLATES SECTION --> */}
+
+      {/* TEMPLATES */}
       <section className="templates">
         <div className="templates-content">
-          <img
-            src={templates}
-            alt="Creative Templates"
-            className="templates-img"
-          />
+          <img src={templates} alt="Creative Templates" className="templates-img" />
           <div className="templates-text">
             <h2>16 Creative Templates Included</h2>
-            <p>
-              Stick the shapes made with CreatCut tools. Color them. Create your
-              own art.
-            </p>
-            <a href="#" className="cta-button dark">
-              Browse Templates
-            </a>
+            <p>Stick the shapes made with CreatCut tools. Color them. Create your own art.</p>
+            <a href="#" className="cta-button dark">Browse Templates</a>
           </div>
         </div>
       </section>
-      {/* <!-- INSPIRATION COLLAGES SECTION -->  */}
+
+      {/* INSPIRATION */}
       <section className="collage-gallery">
         <h2>Be Inspired by Our Collages</h2>
-        <p className="gallery-intro">
-          Here are some creative ideas made using Graphidel tools. Tap the
-          button to see more free collage templates!
-        </p>
+        <p className="gallery-intro">Here are some creative ideas made using Graphidel tools.</p>
         <div className="collage-grid">
           <img src={palmiers} alt="Palm Trees Collage" />
           <img src={coqRecyclage} alt="Recycled Rooster" />
           <img src={papillons} alt="Butterflies" />
           <img src={poisson} alt="Fish Collage" />
-        </div>{" "}
-        <a href="#" className="cta-button dark">
-          View All Collages
-        </a>
-      </section>
-      {/* <!-- PRODUCT SECTION: OUR PAPERCRAFTS -->  */}
-      <section className="product-section">
-        <h2>Our Papercrafts</h2>
-        <div className="product-gallery">
-          <div className="product-card">
-            <img src={DSC08657} alt="5cm Punch Tool" />
-            <h3>Collage activities with CreatCut punch - 5cm circle</h3>
-            <p className="price">£23.99</p>
-            <Link
-              to="/product/show/6890cc555054353854a5187f"
-              className="cta-button dark"
-            >
-              View Product
-            </Link>
-          </div>
-          {/* <!-- Placeholder for 2nd product in future --> */}
-          <div className="product-card">
-            <img src={DSC08653} alt="5cm Punch Tool" />
-            <h3>Collage activities with a CreatCut punch - circle of 2,5cm</h3>
-            <p className="price">£15</p>
-            <Link
-              to="/product/show/6890cc6c5054353854a51881"
-              className="cta-button dark"
-            >
-              View Product
-            </Link>
-          </div>
         </div>
+        <a href="#" className="cta-button dark">View All Collages</a>
       </section>
+
+      {/* DYNAMIC PROMO SECTION */}
+      {promoProduct && (
+        <section className="promo-highlight">
+          <h2>🔥 Current Promotions</h2>
+
+          <div className="promo-card">
+            <img
+              src={`http://localhost:8000/${promoProduct.images?.[0] || promoProduct.image}`}
+              alt={promoProduct.name}
+              className="promo-image"
+            />
+            <div className="promo-content">
+              <h3 className="promo-title">{promoProduct.name}</h3>
+              <p className="promo-price">
+                <span className="old-price">£{parseFloat(promoProduct.price).toFixed(2)}</span>
+                <span className="new-price">£{parseFloat(promoProduct.promo).toFixed(2)}</span>
+              </p>
+              <Link to={`/product/show/${promoProduct._id}`} className="btn btn-dark " style={{width:"10rem",borderRadius:"1rem"}}>
+                View Product
+              </Link>
+            </div>
+          </div>
+        <div>
+          <Link to="/shop" className="cta-button dark btn btn-dark text-center" style={{ marginTop: "30px" }}>
+            View All Products
+          </Link>
+          </div>
+
+        </section>
+      )}
     </>
   );
 };

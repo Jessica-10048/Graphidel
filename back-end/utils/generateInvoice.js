@@ -75,8 +75,8 @@ const generateInvoice = (order) => {
       .fillColor('#000')
       .text(p.name, 50, doc.y + 5, { width: 240, continued: true })
       .text(p.quantity.toString(), 300, doc.y, { continued: true })
-      .text(`${p.price.toFixed(2)} €`, 350, doc.y, { continued: true })
-      .text(`${itemTotal.toFixed(2)} €`, 420, doc.y);
+      .text(`${p.price.toFixed(2)} £`, 350, doc.y, { continued: true })
+      .text(`${itemTotal.toFixed(2)} £`, 420, doc.y);
   });
 
   doc.moveDown(2);
@@ -85,7 +85,7 @@ const generateInvoice = (order) => {
   doc
     .fontSize(14)
     .fillColor('green')
-    .text(`Total: ${totalAmount.toFixed(2)} €`, { align: 'right' });
+    .text(`Total: ${totalAmount.toFixed(2)} £`, { align: 'right' });
 
   doc.moveDown(3);
 

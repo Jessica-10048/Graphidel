@@ -374,6 +374,70 @@ body {
 .card-btn:hover {
   background-color: #0056b3;
 }
+/*************************** Card solde **************/
+.promo-highlight {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.promo-highlight h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #222;
+}
+
+.promo-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  text-align: left;
+}
+
+.promo-image {
+  flex: 1 1 400px;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.promo-content {
+  flex: 1 1 400px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.promo-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.promo-price {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
+
+.new-price {
+  color: #e60000;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 /****************************************** Collage Gallery Section ************************************/
 .collage-gallery {
   padding: 80px 40px;

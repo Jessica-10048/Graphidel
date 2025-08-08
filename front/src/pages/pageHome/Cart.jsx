@@ -28,7 +28,7 @@ const handleConfirm = () => {
             <div className="cart-item-details">
               <h3>{item.name}</h3>
               <p>
-                {item.price} $ x {item.quantity}
+                £{item.price}  x {item.quantity}
               </p>
               <button className="btn btn-danger" onClick={() => removeFromCart(item._id)}>
                 ❌ Remove
@@ -39,7 +39,7 @@ const handleConfirm = () => {
       </div>
 
       <div className="cart-footer">
-        <h3>Total : {total.toFixed(2)} $</h3>
+        <h3>Total : £{total.toFixed(2)} </h3>
         <button onClick={handleConfirm} className="btn btn-success">
   ✅ Confirm my order
 </button>

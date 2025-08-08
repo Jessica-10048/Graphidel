@@ -30,11 +30,11 @@ const sendOrderConfirmation = async (to, order) => {
           <h3 style="color: #333;">🧾 Order Summary</h3>
           <ul style="padding-left: 20px; line-height: 1.5;">
             ${ (order.orders || order.products || []).map(p => `
-              <li>${p.name} × ${p.quantity} – ${(p.price * p.quantity).toFixed(2)} €</li>
+              <li>${p.name} × ${p.quantity} – ${(p.price * p.quantity).toFixed(2)} £</li>
             `).join('') }
           </ul>
 
-          <p style="font-size: 16px; font-weight: bold;">💰 Total: ${(order.total || order.totalAmount).toFixed(2)} €</p>
+          <p style="font-size: 16px; font-weight: bold;">💰 Total: ${(order.total || order.totalAmount).toFixed(2)} £</p>
 
           <p style="margin-top: 30px;">If you have any questions, feel free to contact us at <a href="mailto:${process.env.EMAIL_USER}">${process.env.EMAIL_USER}</a>.</p>
           

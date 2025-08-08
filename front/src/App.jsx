@@ -1,13 +1,16 @@
+// App.jsx
 import { Route, Routes } from "react-router";
 // Importation de style
-import "../css/style.css";
-import "../js/bootstrap.bundle";
-import Layout from "./components/Layout/Layout";
-import PrivateRoute from "../src/utils/helpers/PrivateRoute";
-import PublicRoute from "../src/utils//helpers/PublicRoute";
-import PrivateRouterAdmin from "./utils/helpers/PrivateRouterAdmin";
-// Importation de page
+import '../css/bootstrap.css'
+import '../css/style.css'
+import '../js/bootstrap.bundle'
 
+import Layout from "./components/Layout/Layout";
+import PrivateRoute from "./utils/helpers/PrivateRoute";
+import PublicRoute from "./utils/helpers/PublicRoute"; // <-- fix double slash
+import PrivateRouterAdmin from "./utils/helpers/PrivateRouterAdmin";
+
+// Pages publiques
 import Home from "./pages/pageHome/Home";
 import About from "./pages/pageHome/About";
 import Shop from "./pages/pageHome/Shop";
@@ -23,20 +26,27 @@ import Register from "./pages/User/Register";
 import Checkout from "./pages/pageHome/Checkout";
 import Success from "./pages/pageHome/Success";
 
+// Admin
 import Dashboard from "./pages/Admin/Dashboard";
 import AddProduct from "./pages/Admin/product/AddProduct";
 import ProductList from "./pages/Admin/product/ProductList";
-import EditProduct from "./pages/Admin//product/EditProduct";
+import EditProduct from "./pages/Admin/product/EditProduct";
 import AdminOrders from "./pages/Admin/AdminOrders";
 import AdminNewsletter from "./pages/Admin/newsletter/AdminNewsletter";
 import AdminNewsletterAdd from "./pages/Admin/newsletter/AdminNewsletterAdd";
 import AdminNewsletterEdit from "./pages/Admin/newsletter/AdminNewsletterEdit";
 import AdminSubscribers from "./pages/Admin/newsletter/AdminSubscribers";
+import AdminMember from "./pages/User/AdminMember";
+import EditUser from "./pages/User/EditUser";
+
+// Template (wrapper + composant)
+import AdminTemplateAssetUploadWrapper from "./pages/Admin/Template/AdminTemplateAssetUploadWrapper";
+import AdminTemplateAssetUpload from "./pages/Admin/Template/AdminTemplateAssetUpload";
 function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        {/* ✅ Accessible à tout le monde */}
+        {/* Public */}
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/about" element={<About />} />
@@ -48,19 +58,19 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/success" element={<Success />} />
 
-        {/* 👤 Publics (uniquement si NON connecté) */}
+        {/* Public only */}
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
-        {/* 🔐 Privés (réservés aux utilisateurs connectés) */}
+        {/* Private */}
         <Route element={<PrivateRoute />}>
           <Route path="/account" element={<Account />} />
           <Route path="/favourites" element={<Favourites />} />
         </Route>
 
-        {/* 🛡️ Admin uniquement */}
+        {/* Admin */}
         <Route element={<PrivateRouterAdmin />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           {/* product */}
@@ -69,13 +79,30 @@ function App() {
           <Route path="/admin/product/edit/:id" element={<EditProduct />} />
           {/* order */}
           <Route path="/admin/orders" element={<AdminOrders />} />
-          {/* Newsletter */}
+          {/* newsletter */}
           <Route path="/admin/newsletter" element={<AdminNewsletter />} />
-          <Route path="/admin/newsletter/add" element={<AdminNewsletterAdd />}/>
-          <Route path="/admin/newsletter/edit/:id" element={<AdminNewsletterEdit />}/>
-          {/* Subscribers */}
-           <Route path="/admin/subscribers" element={<AdminSubscribers />} />
+          <Route
+            path="/admin/newsletter/add"
+            element={<AdminNewsletterAdd />}
+          />
+          <Route
+            path="/admin/newsletter/edit/:id"
+            element={<AdminNewsletterEdit />}
+          />
+          <Route path="/admin/subscribers" element={<AdminSubscribers />} />
+          {/* members */}
+          <Route path="/admin/members" element={<AdminMember />} />
+          <Route path="/admin/user/update/:id" element={<EditUser />} />
 
+          {/* Template: upload d’assets avec param idOrSlug */}
+          <Route
+            path="/admin/template/:idOrSlug"
+            element={<AdminTemplateAssetUploadWrapper />}
+          />
+          <Route
+            path="/admin/template"
+            element={<AdminTemplateAssetUpload />}
+          />
         </Route>
       </Route>
     </Routes>
