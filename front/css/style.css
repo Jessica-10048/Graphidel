@@ -1,10 +1,9 @@
-
-
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: #fff;
   color: #000;
+   min-height: 100vh;
 }
 
 /****************************** Header **************************************/
@@ -15,6 +14,8 @@ body {
   padding: 18px 40px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  position: relative;
+  flex-wrap: wrap;
 }
 
 .logo img {
@@ -22,61 +23,163 @@ body {
   width: auto;
 }
 
-.nav-links a {
- margin-left: 20px;
-  text-decoration: none;
-  color: #000;
-  font-size: 0.95rem;
-  display: inline-flex;
+/* Conteneur regroupant navigation + icônes */
+.menu-content {
+  display: flex;
+  gap:18rem;
+  align-items: center;
+}
+/************ dropdown menu ********/
+.animated-dropdown {
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-links a,
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dropdown-menu.show{
+  width: 12rem;
+}
+.li-nav{
+  list-style: none;
+}
+/* Menu burger */
+.burger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  margin-left: auto;
+}
+
+.nav-links,
+.header-icons {
+  display: flex;
   align-items: center;
   gap: 8px;
-  transition: color 0.3s ease;
+  flex-wrap: wrap;
 }
 
-.nav-links a:hover {
-  color: #444;
-}
-
+.nav-links a,
 .header-icons a {
-  margin-left: 20px;
   text-decoration: none;
   color: #000;
-  font-size: 0.95rem;
+  font-size: 23px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   transition: color 0.3s ease;
 }
 
+.nav-links a:hover,
 .header-icons a:hover {
   color: #444;
 }
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: red;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
 
+/************************ Responsive burger ********************************/
+@media (max-width: 768px) {
+  .menu-content {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background-color: #fff;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 20px 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .menu-content.show {
+    display: flex;
+  }
+
+  .nav-links,
+  .header-icons {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-links a,
+  .header-icons a {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+  }
+
+  .burger {
+    display: block;
+  }
+}
+
+/************************************ Hero **************************************/
 .hero {
-  
   background-size: cover;
   background-position: center;
   padding: 120px 40px;
   text-align: center;
   color: #fff;
   position: relative;
-  min-height: 90vh;
+  min-height: 76vh;
 }
 
 .hero::before {
   background-image: url(../src/assets/img/visuel_pro.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   opacity: 0.8;
 }
+.hero-content-about {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff9d;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.hero-content-templates {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  min-height: 11rem;
+  margin: 0 auto;
 
+}
 .hero-content {
   position: relative;
   z-index: 1;
   max-width: 700px;
-  height: 11rem;
+  min-height: 11rem;
   margin: 0 auto;
   background-color: #ffffff9d;
 }
@@ -89,9 +192,9 @@ body {
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-bottom: 30px;
-  color: #000
+  color: #000;
 }
 
 .cta-button {
@@ -106,9 +209,8 @@ body {
 
 .cta-button:hover {
   background-color: #f0f0f0;
-}
-
-/************************************ Templates Section *****************************************/
+  color: #000;
+}/************************************ Templates Section *****************************************/
 .templates {
   padding: 80px 40px;
   background-color: #f9f9f9;
@@ -154,6 +256,186 @@ body {
 
 .cta-button.dark:hover {
   background-color: #333;
+}
+
+.container-templates{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes égales */
+  gap: 2rem; /* espace entre les cartes */
+  justify-items: center; /* centre les cartes horizontalement */
+  padding: 2rem;
+  margin-left: -29rem;
+  margin-top: 7rem;
+}
+
+/******************Card tempates***********/
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.shop-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.shop-card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-card-body h5 {
+  margin-bottom: 0.5rem;
+}
+
+.shop-card-body p {
+  flex-grow: 1;
+  color: #666;
+}
+
+.shop-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 1rem;
+}
+
+.custom-card-vertical {
+  width: 26rem;
+    height: 52rem;
+    border: 1px solid #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 20px 20px 8px rgb(0 0 0 / 33%);
+    font-family: sans-serif;
+    padding: 40px;
+    background-color: #ffffff9d;
+}
+.custom-card-horizontal {
+  width: 26rem;
+    height:37rem;
+    border: 1px solid #000;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 20px 20px 8px rgb(0 0 0 / 33%);
+    font-family: sans-serif;
+    padding: 40px;
+    background-color: #ffffff9d;
+}
+
+.card-img {
+     width: 88%;
+    height: auto;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+  color: #000000;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  color: #555;
+}
+
+.card-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.card-btn:hover {
+  background-color: #0056b3;
+}
+/*************************** Card solde **************/
+.promo-highlight {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.promo-highlight h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #222;
+}
+
+.promo-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  text-align: left;
+}
+
+.promo-image {
+  flex: 1 1 400px;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.promo-content {
+  flex: 1 1 400px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.promo-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.promo-price {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
+
+.new-price {
+  color: #e60000;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 /****************************************** Collage Gallery Section ************************************/
@@ -257,20 +539,391 @@ body {
   font-style: italic;
   font-size: 1rem;
 }
-/*************************************** Formulaire ***********************************/
-.contact-form{
+
+/*********************** Section de formulaire ********************/
+/*********** Formulaire de contact************/
+.contact-form {
   display: flex;
   justify-content: center;
-  min-width: 150px;
+  align-items: center;
+  min-height: 100vh;
+  padding: 60px 20px;
+  background-color: #fefefe;
 }
-.form-card{
-    background-color: #fff;
-    padding: 60px 40px 40px;
-    max-width: 300px;
-    border-radius: 12px;
-    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    transition: transform 0.3s ease;
+.contact-form::before{
+  background-image: url(img/visuel_pro.png);
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.8;
+  height: 55rem;
+  margin-top: 10rem;
+}
+
+
+.form-card {
+  background: #ffffff;
+  padding: 50px 40px;
+  max-width: 520px;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: absolute;
+  margin-top: -15rem;
+}
+
+.form-card h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.form-card p {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+  margin-right: 50px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #000;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Bouton élégant */
+.cta-button {
+  background-color: #111;
+  color: #fff;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+/******************* Formulaire Add Product ************/
+.form-card-add {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 15rem;
+}
+
+.form-card-add h2 {
+  margin-bottom: 20px;
+}
+
+.form-card-add form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+textarea.form-group {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.cta-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #222;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+/*********form inscription *************/
+.form-register {
+  background-color: white;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+  width: 100%;
+}
+
+.form-register h2 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.form-register p {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.form-register .form-group {
+  margin-bottom: 20px;
+}
+
+.form-register label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-register input[type="text"],
+.form-register input[type="email"],
+.form-register input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-register input:focus {
+  outline: none;
+  border-color: #8a2be2;
+}
+
+.form-register .cta-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #000;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-register .cta-button:hover {
+  background-color: #333;
+}
+
+.form-register .form-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+/******************** form Edit ************/
+.admin-form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form label {
+  margin-bottom: 15px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form input,
+.admin-form textarea {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn-save {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background-color: #218838;
+}
+/********************** Cart ********************/
+.cart-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.cart-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.clear-button {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  background-color: #c9302c;
+}
+
+.empty-cart {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.3rem;
+  color: #555;
+}
+/***************** Product list ******************/
+.admin-product-list {
+  padding: 2rem;
+}
+
+.btn-add {
+  background-color: #4CAF50;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-admin-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.admin-product-image {
+  max-width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.product-actions button {
+  margin: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-actions button:first-child {
+  background-color: #2196F3;
+  color: white;
+}
+
+.product-actions button:last-child {
+  background-color: #f44336;
+  color: white;
 }
 
 /*************************************** Footer ***************************************/
