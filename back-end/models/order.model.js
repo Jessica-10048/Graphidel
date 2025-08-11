@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  stripeSessionId: String,
-  totalAmount: Number,
-  status: { type: String, default: "Pending" },
-  orders: [
+  status: { type: String, default: "Pending" }, 
+  products: [
     {
       _id: mongoose.Schema.Types.ObjectId,
       name: String,
@@ -13,6 +11,7 @@ const orderSchema = new mongoose.Schema({
       quantity: Number,
     },
   ],
+  total: Number,
   customer: {
     firstName: String,
     lastName: String,
@@ -20,7 +19,11 @@ const orderSchema = new mongoose.Schema({
     address: String,
     postalCode: String,
   },
-  createdAt: { type: Date, default: Date.now },
-});
+  meta: {
+    stripeSessionId: String,
+    stripePaymentStatus: String,
+    stripeEventId: String,
+  },
+}, { timestamps: true });
 
 module.exports = mongoose.model("Order", orderSchema);
